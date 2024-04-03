@@ -4,7 +4,7 @@ import numpy as np
 from TicTacToeEnv import TicTacToe
 
 GAMMA = 0.9
-ALPHA = 0.05
+ALPHA = 0.005
 
 
 class Agent:
@@ -27,14 +27,11 @@ class Agent:
         for i in range(index, size_observe, 2):
             if i == index:
                 old_state = "".join(list(map(convert_none, revers_obs[i])))
-                if i == 0:
-                    old_action = None
-                else:
-                    old_action = revers_act[int((i-1)/2)]
+                old_action = None
                 self.value_update(old_state, old_action, reward, new_state, new_action)
             else:
                 old_state = "".join(list(map(convert_none, revers_obs[i])))
-                old_action = revers_act[int((i-1)/2)]
+                old_action = revers_act[int((i-2)/2)]
                 self.value_update(old_state, old_action, 0, new_state, new_action)
             new_state = old_state
             new_action = old_action
@@ -67,3 +64,11 @@ def convert_none(symbol):
     if symbol == "":
         return "_"
     return symbol
+
+
+def union(agents):
+    first_agent = agents[0]
+    second_agent = agents[1]
+    for key, value in first_agent.values.items():
+        second_agent.values[key] += value
+    first_agent.values = second_agent.values.copy()
