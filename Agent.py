@@ -4,7 +4,7 @@ import numpy as np
 from TicTacToeEnv import TicTacToe
 
 GAMMA = 0.9
-ALPHA = 0.005
+ALPHA = 0.01
 
 
 class Agent:
@@ -55,10 +55,10 @@ class Agent:
 
     def value_update(self, old_state, old_action, reward, new_state, new_action):
         if new_state is None and new_action is None:
-            self.values[(old_state, old_action)] += (1-ALPHA) * reward
+            self.values[(old_state, old_action)] = (1-ALPHA) * self.values[(old_state, old_action)] + ALPHA * reward
         else:
             new_val = self.values[(new_state, new_action)]
-            self.values[(old_state, old_action)] += (1-ALPHA) * reward + GAMMA * ALPHA * new_val
+            self.values[(old_state, old_action)] = (1-ALPHA) * self.values[(old_state, old_action)] + ALPHA * (reward + GAMMA * new_val)
 
 def convert_none(symbol):
     if symbol == "":

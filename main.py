@@ -10,7 +10,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 SUB_EPISODES = 5
 TEST_EPISODES = 10
-LEARN_EPISODES = 1000
+LEARN_EPISODES = 10000
 AGENT_LEARN_EPISODES = 400 #100
 RANDOM_LEARN_EPISODES = 400 #50
 EPSILON = 1
@@ -131,9 +131,9 @@ if __name__ == "__main__":
         freq_win_agent_1 = agent_1_wins / AGENT_LEARN_EPISODES
         freq_win_agent_2 = agent_2_wins / AGENT_LEARN_EPISODES
         freq_draw_learning = draw / AGENT_LEARN_EPISODES
-        writer.add_scalar("Agent1LearningRate", freq_win_agent_1, i)
-        writer.add_scalar("Agent2LearningRate", freq_win_agent_2, i)
-        writer.add_scalar("DrawLearningRate", freq_draw_learning, i)
+        writer.add_scalar("WinRateAgent1", freq_win_agent_1, i)
+        writer.add_scalar("WinRateAgent2", freq_win_agent_2, i)
+        writer.add_scalar("DrawRate", freq_draw_learning, i)
         agent_win = 0
         draw = 0
         id_x = 0
